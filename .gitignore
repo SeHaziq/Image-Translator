@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual Environment
+venv/
+.venv/
+
+# Environment Variables
+.env
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Uploads
+uploads/
+
+# Output
+output/
+
+# OCR models (if downloaded later)
+models/
+
+# Python cache
+.pytest_cache/
+
+# Logs
+*.log
