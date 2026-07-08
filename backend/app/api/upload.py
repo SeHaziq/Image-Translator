@@ -9,3 +9,5 @@ router = APIRouter()
 async def upload_image(file: UploadFile = File(...)):
     result = save_file(file)
     return result
+
+    ## ttet
