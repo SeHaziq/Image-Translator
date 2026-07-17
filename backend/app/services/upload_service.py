@@ -5,6 +5,7 @@ import shutil
 
 
 UPLOAD_FOLDER = Path("uploads")
+
 ALLOWED_EXTENSIONS = {
     ".jpg",
     ".jpeg",
@@ -12,18 +13,31 @@ ALLOWED_EXTENSIONS = {
     ".webp"
 }
 
+
+def validate_extension(file_extension: str):
+    if file_extension.lower() not in ALLOWED_EXTENSIONS:
+        raise HTTPException(
+            status_code=415,
+            detail=f"Unsupported file type: {file_extension}"
+        )
+
+
+def generate_filename(file_extension: str):
+    return f"{uuid4()}{file_extension}"
+
+
 def save_file(upload_file):
     # Create the uploads folder if it doesn't exist
     UPLOAD_FOLDER.mkdir(exist_ok=True)
 
-    # Generate a unique filename
+    # Get the file extension
     file_extension = Path(upload_file.filename).suffix
-    if file_extension.lower() not in ALLOWED_EXTENSIONS:
-        raise HTTPException(
-        status_code=415,
-        detail=f"Unsupported file type: {file_extension}"
-)
-    unique_filename = f"{uuid4()}{file_extension}"
+
+    # Validate the file extension
+    validate_extension(file_extension)
+
+    # Generate a unique filename
+    unique_filename = generate_filename(file_extension)
 
     # Full path where the file will be saved
     file_path = UPLOAD_FOLDER / unique_filename
