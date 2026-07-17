@@ -1,10 +1,16 @@
 from pathlib import Path
+from fastapi import HTTPException
 from uuid import uuid4
 import shutil
 
 
 UPLOAD_FOLDER = Path("uploads")
-
+ALLOWED_EXTENSIONS = {
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".webp"
+}
 
 def save_file(upload_file):
     # Create the uploads folder if it doesn't exist
@@ -12,6 +18,11 @@ def save_file(upload_file):
 
     # Generate a unique filename
     file_extension = Path(upload_file.filename).suffix
+    if file_extension.lower() not in ALLOWED_EXTENSIONS:
+        raise HTTPException(
+        status_code=415,
+        detail=f"Unsupported file type: {file_extension}"
+)
     unique_filename = f"{uuid4()}{file_extension}"
 
     # Full path where the file will be saved
