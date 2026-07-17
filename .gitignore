@@ -20,10 +20,12 @@ venv/
 Thumbs.db
 
 # Uploads
-uploads/
+uploads/*
+!uploads/.gitkeep
 
 # Output
-output/
+output/*
+!output/.gitkeep
 
 # OCR models (if downloaded later)
 # models/
